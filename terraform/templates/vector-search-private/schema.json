@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Vertex AI Vector Search (Private Network)",
+  "description": "Template schema for deploying Google Cloud Vertex AI Vector Search within a private VPC network or Private Service Connect (PSC) for enterprise RAG applications.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "display_name"
+  ],
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "description": "GCP Project ID."
+    },
+    "region": {
+      "type": "string",
+      "default": "us-central1",
+      "description": "GCP region for all resources."
+    },
+    "display_name": {
+      "type": "string",
+      "description": "Display name for the Vertex AI Vector Search Index."
+    },
+    "description": {
+      "type": "string",
+      "default": "Vertex AI Vector Search — Private Network Deployment",
+      "description": "Description for the Vector Search resources."
+    },
+    "network": {
+      "type": "string",
+      "description": "VPC network resource ID for private peering (e.g., projects/{project_id}/global/networks/{network_name})."
+    },
+    "enable_private_service_connect": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable Private Service Connect (PSC) for endpoint connectivity."
+    },
+    "psc_project_allowlist": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "List of GCP project IDs allowed to connect via PSC."
+    },
+    "allowed_invoker_members": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "IAM identities granted roles/aiplatform.user on the index endpoint."
+    },
+    "dimensions": {
+      "type": "integer",
+      "default": 768,
+      "minimum": 1,
+      "maximum": 4096,
+      "description": "Dimensionality of vector embeddings (e.g. 768 for text-embedding-004)."
+    },
+    "distance_measure_type": {
+      "type": "string",
+      "enum": [
+        "DOT_PRODUCT_DISTANCE",
+        "COSINE_DISTANCE",
+        "SQUARED_L2_DISTANCE"
+      ],
+      "default": "DOT_PRODUCT_DISTANCE",
+      "description": "Distance metric for nearest neighbor calculations."
+    },
+    "shard_size": {
+      "type": "string",
+      "enum": [
+        "SHARD_SIZE_SMALL",
+        "SHARD_SIZE_MEDIUM",
+        "SHARD_SIZE_LARGE"
+      ],
+      "default": "SHARD_SIZE_SMALL",
+      "description": "Size of index shard."
+    },
+    "algorithm": {
+      "type": "string",
+      "enum": [
+        "tree_ah",
+        "brute_force"
+      ],
+      "default": "tree_ah",
+      "description": "Indexing algorithm (tree_ah uses ScaNN; brute_force performs exact search)."
+    },
+    "index_update_method": {
+      "type": "string",
+      "enum": [
+        "STREAM_UPDATE",
+        "BATCH_UPDATE"
+      ],
+      "default": "STREAM_UPDATE",
+      "description": "STREAM_UPDATE enables real-time insertion/deletion; BATCH_UPDATE uses GCS batch files."
+    },
+    "create_staging_bucket": {
+      "type": "boolean",
+      "default": true,
+      "description": "Create a private GCS bucket for staging document embeddings and data."
+    },
+    "machine_type": {
+      "type": "string",
+      "default": "e2-standard-16",
+      "description": "Compute machine type for serving node replicas."
+    },
+    "min_replicas": {
+      "type": "integer",
+      "default": 1,
+      "minimum": 1,
+      "description": "Minimum node replicas for autoscaling."
+    },
+    "max_replicas": {
+      "type": "integer",
+      "default": 2,
+      "minimum": 1,
+      "description": "Maximum node replicas for autoscaling."
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Resource labels."
+    }
+  }
+}
