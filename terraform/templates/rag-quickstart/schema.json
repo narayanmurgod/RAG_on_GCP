@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Serverless RAG Quickstart",
+  "description": "Template schema for deploying a zero-idle-cost, serverless RAG application on Google Cloud using Cloud Run and Vertex AI RAG Engine.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "display_name"
+  ],
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "description": "GCP Project ID."
+    },
+    "region": {
+      "type": "string",
+      "default": "us-central1",
+      "description": "GCP region for all resources."
+    },
+    "display_name": {
+      "type": "string",
+      "default": "rag-quickstart",
+      "description": "Display name prefix for quickstart resources."
+    },
+    "container_image": {
+      "type": "string",
+      "default": "us-docker.pkg.dev/cloudrun/container/hello",
+      "description": "Container image URI for the FastAPI RAG microservice."
+    },
+    "min_instances": {
+      "type": "integer",
+      "default": 0,
+      "minimum": 0,
+      "description": "Minimum Cloud Run instances (0 enables serverless scale-to-zero)."
+    },
+    "max_instances": {
+      "type": "integer",
+      "default": 5,
+      "minimum": 1,
+      "description": "Maximum Cloud Run instances for autoscaling."
+    },
+    "allow_unauthenticated": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to permit public unauthenticated invocations."
+    },
+    "embedding_model": {
+      "type": "string",
+      "default": "text-embedding-004",
+      "description": "Vertex AI embedding model identifier."
+    },
+    "generation_model": {
+      "type": "string",
+      "default": "gemini-1.5-flash",
+      "description": "Default Gemini generative model identifier."
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Resource labels."
+    }
+  }
+}

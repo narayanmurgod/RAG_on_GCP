@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Enterprise Cloud Spanner RAG",
+  "description": "Template schema for deploying high-availability, enterprise-grade RAG infrastructure on Google Cloud using Cloud Spanner Vector Search, Spanner Graph RAG, private VPC networking, and Cloud Run.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "display_name"
+  ],
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "description": "GCP Project ID."
+    },
+    "region": {
+      "type": "string",
+      "default": "us-central1",
+      "description": "Primary GCP region for all resources."
+    },
+    "display_name": {
+      "type": "string",
+      "default": "rag-enterprise",
+      "description": "Display name prefix for enterprise RAG resources."
+    },
+    "spanner_config": {
+      "type": "string",
+      "default": "regional-us-central1",
+      "description": "Spanner instance configuration (e.g. regional-us-central1, nam3)."
+    },
+    "spanner_processing_units": {
+      "type": "integer",
+      "default": 100,
+      "minimum": 100,
+      "description": "Spanner capacity in processing units (100 to 1000 PUs)."
+    },
+    "spanner_database_name": {
+      "type": "string",
+      "default": "rag_knowledge_db",
+      "description": "Database name within the Spanner instance."
+    },
+    "embedding_dimension": {
+      "type": "integer",
+      "default": 768,
+      "description": "Dimensionality of vector embeddings."
+    },
+    "spanner_distance_type": {
+      "type": "string",
+      "enum": [
+        "COSINE",
+        "EUCLIDEAN",
+        "DOT_PRODUCT"
+      ],
+      "default": "COSINE",
+      "description": "Vector search distance metric."
+    },
+    "enable_spanner_graph_rag": {
+      "type": "boolean",
+      "default": true,
+      "description": "Create property graph tables and schema for Spanner Graph RAG."
+    },
+    "network_name": {
+      "type": "string",
+      "default": "rag-enterprise-vpc",
+      "description": "Name of the dedicated enterprise VPC."
+    },
+    "app_subnet_cidr": {
+      "type": "string",
+      "default": "10.0.1.0/24",
+      "description": "CIDR block for the application subnet."
+    },
+    "connector_cidr": {
+      "type": "string",
+      "default": "10.8.0.0/28",
+      "description": "Dedicated /28 CIDR block for the Serverless VPC Access connector."
+    },
+    "container_image": {
+      "type": "string",
+      "default": "us-docker.pkg.dev/cloudrun/container/hello",
+      "description": "Container image URI for the FastAPI RAG microservice."
+    },
+    "min_instances": {
+      "type": "integer",
+      "default": 1,
+      "minimum": 0,
+      "description": "Minimum instances (default 1 warm instance for enterprise SLA)."
+    },
+    "max_instances": {
+      "type": "integer",
+      "default": 10,
+      "minimum": 1,
+      "description": "Maximum instances for autoscaling."
+    },
+    "allow_unauthenticated": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to permit unauthenticated invocations."
+    },
+    "embedding_model": {
+      "type": "string",
+      "default": "text-embedding-004",
+      "description": "Vertex AI embedding model identifier."
+    },
+    "generation_model": {
+      "type": "string",
+      "default": "gemini-1.5-pro",
+      "description": "Gemini model identifier for enterprise reasoning & generation."
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Resource labels."
+    }
+  }
+}
