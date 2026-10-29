@@ -1,7 +1,11 @@
-# Retrieval-Augmented Generation (RAG) on Google Cloud Platform (GCP)
+﻿# Retrieval-Augmented Generation (RAG) on Google Cloud Platform (GCP)
 ## Architecture Guide, Service Catalog, and Comprehensive Learning Roadmap
 
 ---
+
+
+> [!TIP]
+> **Database Selection Guide**: Unsure which database backend to pick for your RAG scenario? Check out the comprehensive [GCP RAG Database Selection Guide & Decision Framework](DATABASE_SELECTION_GUIDE.md) covering Vertex AI Search, Vertex AI Vector Search, AlloyDB ScaNN, Cloud SQL, Cloud Spanner, BigQuery, Firestore, and Pinecone with decision trees and scenario archetypes.
 
 ## 1. Executive Summary & Overview
 
@@ -26,24 +30,24 @@ Your genius friend **Gemini** can write brilliant answers, but doesn't know what
 
 ```
   [ Your PDFs / Docs ]
-          │
-          ▼
-  1. Cloud Storage (GCS) ─────► Giant toy chest where raw files live
-          │
-          ▼
-  2. Document AI ─────────────► Smart scanner that slices messy PDFs into neat note cards
-          │
-          ▼
-  3. Vertex AI Embeddings ────► Translates words into "Idea GPS coordinates"
-          │
-          ▼
-  4. Vector Search ───────────► 2-millisecond super librarian finding matching cards
-          │
-          ▼
-  5. Gemini 1.5 Pro / Flash ──► Genius student reading the cards & writing grounded answers!
-          │
-          ▲
-  6. Cloud Run ───────────────► Messenger robot running between your app, librarian, and Gemini
+          â”‚
+          â–¼
+  1. Cloud Storage (GCS) â”€â”€â”€â”€â”€â–º Giant toy chest where raw files live
+          â”‚
+          â–¼
+  2. Document AI â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â–º Smart scanner that slices messy PDFs into neat note cards
+          â”‚
+          â–¼
+  3. Vertex AI Embeddings â”€â”€â”€â”€â–º Translates words into "Idea GPS coordinates"
+          â”‚
+          â–¼
+  4. Vector Search â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â–º 2-millisecond super librarian finding matching cards
+          â”‚
+          â–¼
+  5. Gemini 1.5 Pro / Flash â”€â”€â–º Genius student reading the cards & writing grounded answers!
+          â”‚
+          â–²
+  6. Cloud Run â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â–º Messenger robot running between your app, librarian, and Gemini
 ```
 
 | Step in RAG | Simple Analogy | GCP Service | Role in RAG |
@@ -51,7 +55,7 @@ Your genius friend **Gemini** can write brilliant answers, but doesn't know what
 | **Raw Storage** | Giant toy chest / locker | **Google Cloud Storage (GCS)** | Holds raw PDFs, Word docs, images, and audio. |
 | **Doc Processing** | Slicing books into note cards | **Document AI** | OCR, table extraction, and semantic chunking. |
 | **Meaning Mapping** | Idea GPS coordinates | **Vertex AI Embeddings** (`text-embedding-004`) | Converts text chunks into mathematical vectors. |
-| **Fast Retrieval** | Olympic sprinter librarian | **Vertex AI Vector Search** | ScaNN-based vector search in 2–5 milliseconds. |
+| **Fast Retrieval** | Olympic sprinter librarian | **Vertex AI Vector Search** | ScaNN-based vector search in 2â€“5 milliseconds. |
 | **Answer Generation** | Genius student with open book | **Gemini (1.5 Pro / Flash / 2.0)** | Reads retrieved cards and generates verified answers with citations. |
 | **App Messenger** | Runner between desk and library | **Cloud Run** | Serverless API hosting FastAPI, LangChain, or LlamaIndex. |
 
@@ -200,21 +204,21 @@ GCP offers specialized vector search mechanisms depending on workload type (anal
 * **Data Flow**:
   ```
   User Query
-      │
-      ▼
+      â”‚
+      â–¼
   Cloud Run (FastAPI Backend)
-      │
-      ├──> Step 1: Embed Query (text-embedding-004)
-      │
-      ├──> Step 2: ANN Search (Vertex AI Vector Search Endpoint)
-      │               └──> Retrieves top 50 candidate chunks
-      │
-      ├──> Step 3: Semantic Re-ranking (Vertex AI Ranking API)
-      │               └──> Filters down to top 5 high-precision chunks
-      │
-      ├──> Step 4: Context Assembly & Prompt Engineering
-      │
-      └──> Step 5: Gemini 1.5 Inference (Generates grounded answer)
+      â”‚
+      â”œâ”€â”€> Step 1: Embed Query (text-embedding-004)
+      â”‚
+      â”œâ”€â”€> Step 2: ANN Search (Vertex AI Vector Search Endpoint)
+      â”‚               â””â”€â”€> Retrieves top 50 candidate chunks
+      â”‚
+      â”œâ”€â”€> Step 3: Semantic Re-ranking (Vertex AI Ranking API)
+      â”‚               â””â”€â”€> Filters down to top 5 high-precision chunks
+      â”‚
+      â”œâ”€â”€> Step 4: Context Assembly & Prompt Engineering
+      â”‚
+      â””â”€â”€> Step 5: Gemini 1.5 Inference (Generates grounded answer)
   ```
 
 ---
@@ -229,19 +233,19 @@ GCP offers specialized vector search mechanisms depending on workload type (anal
 ## 5. End-to-End Learning Roadmap to Master RAG on GCP
 
 ```
-┌──────────────────────────────────────────────────────────────────────────────────┐
-│                             GCP RAG LEARNING ROADMAP                             │
-├──────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                  │
-│  [Phase 1] ────> [Phase 2] ────> [Phase 3] ────> [Phase 4] ────> [Phase 5] ────> │
-│  Foundations     Turnkey RAG    Vector Stores    Custom ETL     Advanced RAG     │
-│  & Vertex AI     (Agent Bldr)   (Vector Search)  (Doc AI)       (Hybrid/Re-rank) │
-│                                                                        │         │
-│                                                                        ▼         │
-│                                                                  [Phase 6]       │
-│                                                                  Production,     │
-│                                                                  Security, Eval  │
-└──────────────────────────────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚                             GCP RAG LEARNING ROADMAP                             â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚                                                                                  â”‚
+â”‚  [Phase 1] â”€â”€â”€â”€> [Phase 2] â”€â”€â”€â”€> [Phase 3] â”€â”€â”€â”€> [Phase 4] â”€â”€â”€â”€> [Phase 5] â”€â”€â”€â”€> â”‚
+â”‚  Foundations     Turnkey RAG    Vector Stores    Custom ETL     Advanced RAG     â”‚
+â”‚  & Vertex AI     (Agent Bldr)   (Vector Search)  (Doc AI)       (Hybrid/Re-rank) â”‚
+â”‚                                                                        â”‚         â”‚
+â”‚                                                                        â–¼         â”‚
+â”‚                                                                  [Phase 6]       â”‚
+â”‚                                                                  Production,     â”‚
+â”‚                                                                  Security, Eval  â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ---
@@ -395,3 +399,4 @@ GCP offers specialized vector search mechanisms depending on workload type (anal
 1. Start by implementing **Phase 1 and Phase 2** using the Google Cloud Free Tier / Credits to get familiar with Vertex AI Studio and Vertex AI Search.
 2. Select your vector storage architecture based on the **Decision Matrix in Section 3**.
 3. Integrate **Document AI** and the **Vertex AI Ranking API** to elevate retrieval precision beyond simple text matching.
+
