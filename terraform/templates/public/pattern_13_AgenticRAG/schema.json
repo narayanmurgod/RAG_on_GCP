@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Pattern 13: Public Agentic Reasoning RAG Deployment",
+  "description": "Schema for Pattern 13 Public Vertex AI Reasoning Engine agent coupled with Vertex AI RAG Engine knowledge corpus and optional Cloud Run serving service.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "source_archive_gcs_uri",
+    "requirements_gcs_uri"
+  ],
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "description": "GCP Project ID hosting Vertex AI Reasoning Engine and RAG Engine."
+    },
+    "region": {
+      "type": "string",
+      "default": "us-central1",
+      "description": "GCP region for resources (Reasoning Engine is supported in us-central1)."
+    },
+    "display_name": {
+      "type": "string",
+      "default": "pattern13-agentic-rag",
+      "description": "Display name prefix for resources."
+    },
+    "agent_framework": {
+      "type": "string",
+      "default": "google-adk",
+      "enum": ["google-adk", "langchain", "langgraph", "llamaindex", "custom"],
+      "description": "Agent framework tag: google-adk | langchain | langgraph | llamaindex | custom."
+    },
+    "deployment_type": {
+      "type": "string",
+      "default": "source_code",
+      "enum": ["source_code", "gcs_package", "byoc"],
+      "description": "Vertex AI Agent packaging model."
+    },
+    "source_archive_gcs_uri": {
+      "type": "string",
+      "description": "GCS URI of the packaged source code archive (.tar.gz)."
+    },
+    "requirements_gcs_uri": {
+      "type": "string",
+      "description": "GCS URI of the Python requirements.txt file."
+    },
+    "python_version": {
+      "type": "string",
+      "default": "3.11",
+      "description": "Python runtime version for Reasoning Engine container."
+    },
+    "corpus_name": {
+      "type": "string",
+      "default": "agentic-rag-corpus",
+      "description": "Name for the Vertex AI RAG corpus."
+    },
+    "embedding_model": {
+      "type": "string",
+      "default": "publishers/google/models/text-embedding-005",
+      "description": "Embedding model resource name for RAG Engine corpus."
+    },
+    "enable_cloud_run": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable optional Cloud Run frontend / API gateway layer."
+    },
+    "container_image": {
+      "type": "string",
+      "default": "us-docker.pkg.dev/cloudrun/container/hello",
+      "description": "Container image URL deployed to Cloud Run."
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "default": {
+        "environment": "public",
+        "pattern": "pattern-13-agenticrag",
+        "managed-by": "aip-terraform"
+      },
+      "description": "Resource labels attached to all resources."
+    }
+  }
+}

@@ -1,0 +1,15 @@
+project_id          = "my-gcp-project"
+region              = "us-central1"
+display_name        = "pattern12-spanner-rag"
+use_existing_network = false
+network_name        = "pattern12-spanner-vpc"
+instance_id         = "pattern12-spanner-instance"
+spanner_config      = "regional-us-central1"
+processing_units    = 100
+database_name       = "rag-knowledge-base"
+embedding_dimension = 768
+distance_type       = "COSINE"
+enable_vector_index = true
+enable_graph_rag    = true
+graph_name          = "KnowledgeGraph"
+enable_cloud_run    = false

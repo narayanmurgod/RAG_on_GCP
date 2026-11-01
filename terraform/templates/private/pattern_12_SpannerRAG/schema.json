@@ -1,0 +1,123 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Pattern 12: Private Cloud Spanner Graph & Vector RAG Deployment",
+  "description": "Schema for Pattern 12 Private Cloud Spanner deployment with Vector Search indexing, Spanner Graph schema, dedicated VPC, Serverless VPC Access connector, restricted IAM invokers, and optional Cloud Run serving service.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "instance_id",
+    "database_name"
+  ],
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "description": "GCP Project ID hosting Spanner resources."
+    },
+    "region": {
+      "type": "string",
+      "default": "us-central1",
+      "description": "GCP region for resources."
+    },
+    "display_name": {
+      "type": "string",
+      "default": "pattern12-spanner-rag",
+      "description": "Display name prefix for resources."
+    },
+    "use_existing_network": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to use an existing VPC network instead of creating a new one."
+    },
+    "network_name": {
+      "type": "string",
+      "default": "pattern12-spanner-vpc",
+      "description": "Name of the custom VPC network to create if use_existing_network is false."
+    },
+    "existing_network_name": {
+      "type": "string",
+      "default": "",
+      "description": "VPC network ID or self link if use_existing_network is true."
+    },
+    "existing_connector_id": {
+      "type": "string",
+      "description": "Existing Serverless VPC Access connector ID if use_existing_network is true."
+    },
+    "instance_id": {
+      "type": "string",
+      "default": "pattern12-spanner-instance",
+      "description": "Unique ID for the Cloud Spanner instance."
+    },
+    "spanner_config": {
+      "type": "string",
+      "default": "regional-us-central1",
+      "description": "Spanner instance regional or multi-regional configuration."
+    },
+    "processing_units": {
+      "type": "number",
+      "default": 100,
+      "description": "Compute capacity allocated in processing units (100 to 1000 PUs)."
+    },
+    "database_name": {
+      "type": "string",
+      "default": "rag-knowledge-base",
+      "description": "Name of the Spanner database."
+    },
+    "embedding_dimension": {
+      "type": "number",
+      "default": 768,
+      "description": "Vector embedding dimension for documents table."
+    },
+    "distance_type": {
+      "type": "string",
+      "default": "COSINE",
+      "enum": ["COSINE", "EUCLIDEAN", "DOT_PRODUCT"],
+      "description": "Distance metric for vector search index."
+    },
+    "enable_vector_index": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to create the vector search index."
+    },
+    "enable_graph_rag": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to deploy the Spanner Graph schema for Graph-Augmented RAG."
+    },
+    "graph_name": {
+      "type": "string",
+      "default": "KnowledgeGraph",
+      "description": "Name of the property graph created in Spanner Graph."
+    },
+    "deletion_protection": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to prevent accidental database deletion."
+    },
+    "allowed_invoker_members": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "List of IAM members permitted to connect to the Spanner database."
+    },
+    "enable_cloud_run": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable optional Cloud Run RAG retrieval / generation serving service."
+    },
+    "container_image": {
+      "type": "string",
+      "default": "us-docker.pkg.dev/cloudrun/container/hello",
+      "description": "Container image URL deployed to Cloud Run."
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "default": {
+        "environment": "private",
+        "pattern": "pattern-12-spannerrag",
+        "managed-by": "aip-terraform"
+      },
+      "description": "Resource labels attached to all resources."
+    }
+  }
+}

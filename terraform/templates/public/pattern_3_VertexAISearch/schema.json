@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Vertex AI Search — Public Pattern 3",
+  "description": "Template schema for deploying a public Vertex AI Search (Discovery Engine) Data Store and Search Engine with Cloud Storage document staging.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "display_name",
+    "data_store_id"
+  ],
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "description": "GCP Project ID."
+    },
+    "region": {
+      "type": "string",
+      "default": "us-central1",
+      "description": "GCP region for regional resources (GCS staging bucket)."
+    },
+    "location": {
+      "type": "string",
+      "default": "global",
+      "description": "Discovery Engine location (global, us, eu)."
+    },
+    "display_name": {
+      "type": "string",
+      "default": "pattern3-vertex-ai-search",
+      "description": "Display name prefix for search resources."
+    },
+    "data_store_id": {
+      "type": "string",
+      "default": "pattern3-data-store",
+      "description": "Unique ID for the Discovery Engine Data Store."
+    },
+    "industry_vertical": {
+      "type": "string",
+      "enum": [
+        "GENERIC",
+        "MEDIA",
+        "HEALTHCARE_FHIR"
+      ],
+      "default": "GENERIC",
+      "description": "Industry vertical classification."
+    },
+    "content_config": {
+      "type": "string",
+      "enum": [
+        "NO_CONTENT",
+        "CONTENT_REQUIRED",
+        "PUBLIC_WEBSITE"
+      ],
+      "default": "CONTENT_REQUIRED",
+      "description": "Content storage configuration for unstructured documents."
+    },
+    "create_search_engine": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to deploy a search engine linked to the data store."
+    },
+    "engine_id": {
+      "type": "string",
+      "default": "",
+      "description": "Optional search engine ID (defaults to data_store_id-engine)."
+    },
+    "search_tier": {
+      "type": "string",
+      "enum": [
+        "SEARCH_TIER_STANDARD",
+        "SEARCH_TIER_ENTERPRISE"
+      ],
+      "default": "SEARCH_TIER_STANDARD",
+      "description": "Search service tier."
+    },
+    "search_add_ons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "SEARCH_ADD_ON_LLM"
+      ],
+      "description": "Enabled add-on features (e.g. SEARCH_ADD_ON_LLM for generative summaries)."
+    },
+    "create_staging_bucket": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to create a Cloud Storage staging bucket for document uploads."
+    },
+    "staging_bucket_name": {
+      "type": "string",
+      "default": "",
+      "description": "Custom name for document staging bucket."
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Resource labels."
+    }
+  }
+}

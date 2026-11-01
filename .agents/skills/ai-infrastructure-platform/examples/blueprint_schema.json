@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AIPBlueprintDefinition",
+  "description": "Schema definition for an enterprise AI Infrastructure Platform (AIP) Blueprint",
+  "type": "object",
+  "required": [
+    "blueprint_id",
+    "name",
+    "description",
+    "target_workload",
+    "cloud",
+    "ai_platform",
+    "deployment_type",
+    "included_services",
+    "default_model",
+    "terraform_template",
+    "version",
+    "status"
+  ],
+  "properties": {
+    "blueprint_id": {
+      "type": "string",
+      "pattern": "^BP-[0-9]{2}$",
+      "description": "Unique identifier for the blueprint (e.g., BP-01)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name shown to end users"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed explanation of what the blueprint provisions and solves"
+    },
+    "target_workload": {
+      "type": "string",
+      "enum": ["Experimentation", "RAG", "Enterprise APIs", "Grounded Agents", "Multimodal", "Enterprise Platform"]
+    },
+    "cloud": {
+      "type": "string",
+      "enum": ["azure", "aws", "gcp"],
+      "default": "azure"
+    },
+    "ai_platform": {
+      "type": "string",
+      "enum": ["microsoft_foundry", "amazon_bedrock", "google_vertex_ai"],
+      "default": "microsoft_foundry"
+    },
+    "deployment_type": {
+      "type": "string",
+      "enum": ["Standard Public", "Standard Private"],
+      "default": "Standard Public"
+    },
+    "included_services": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of cloud services provisioned by the template"
+    },
+    "default_model": {
+      "type": "string",
+      "default": "GPT-4o-mini"
+    },
+    "terraform_template": {
+      "type": "string",
+      "description": "Path or identifier of the approved Terraform template"
+    },
+    "version": {
+      "type": "string",
+      "default": "1.0.0"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "deprecated", "preview"],
+      "default": "active"
+    }
+  }
+}

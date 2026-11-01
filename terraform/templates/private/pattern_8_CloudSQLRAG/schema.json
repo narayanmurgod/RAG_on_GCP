@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Cloud SQL pgvector — Private Pattern 8",
+  "description": "Template schema for deploying a private Cloud SQL PostgreSQL instance with pgvector, VPC private IP, restricted IAM invokers, optional private Cloud Run serving layer, and optional GCS staging bucket.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "display_name",
+    "instance_name",
+    "user_password"
+  ],
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "description": "GCP Project ID."
+    },
+    "region": {
+      "type": "string",
+      "default": "us-central1",
+      "description": "GCP region for all resources."
+    },
+    "display_name": {
+      "type": "string",
+      "default": "pattern8-cloudsql-rag",
+      "description": "Display name prefix for private resources."
+    },
+    "allowed_invoker_members": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "List of IAM identities granted Cloud SQL client and instance user permissions."
+    },
+    "use_existing_network": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, attach to existing VPC and connector. If false, create new VPC."
+    },
+    "network_name": {
+      "type": "string",
+      "default": "rag-sql-private-vpc",
+      "description": "Name of new VPC network (when use_existing_network = false)."
+    },
+    "app_subnet_cidr": {
+      "type": "string",
+      "default": "10.0.1.0/24",
+      "description": "Subnet CIDR for application tier."
+    },
+    "connector_cidr": {
+      "type": "string",
+      "default": "10.8.0.0/28",
+      "description": "VPC Access Connector /28 CIDR."
+    },
+    "enable_nat_gateway": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to provision Cloud NAT for private outbound traffic."
+    },
+    "existing_network_name": {
+      "type": "string",
+      "default": "",
+      "description": "Existing VPC name (when use_existing_network = true)."
+    },
+    "existing_connector_id": {
+      "type": "string",
+      "default": "",
+      "description": "Existing VPC Access connector ID (when use_existing_network = true)."
+    },
+    "instance_name": {
+      "type": "string",
+      "default": "pattern8-sql-instance",
+      "description": "Unique name for the Cloud SQL instance."
+    },
+    "database_version": {
+      "type": "string",
+      "default": "POSTGRES_16",
+      "description": "PostgreSQL database version."
+    },
+    "tier": {
+      "type": "string",
+      "default": "db-custom-2-7680",
+      "description": "Machine tier for database instance."
+    },
+    "database_name": {
+      "type": "string",
+      "default": "rag_knowledge_db",
+      "description": "Name of PostgreSQL database."
+    },
+    "user_name": {
+      "type": "string",
+      "default": "rag_app_user",
+      "description": "Application database username."
+    },
+    "user_password": {
+      "type": "string",
+      "description": "Application database user password."
+    },
+    "deletion_protection": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether Terraform prevents accidental deletion."
+    },
+    "create_staging_bucket": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to create a Cloud Storage staging bucket."
+    },
+    "staging_bucket_name": {
+      "type": "string",
+      "default": "",
+      "description": "Custom name for document staging bucket."
+    },
+    "enable_cloud_run": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to deploy the optional private Cloud Run FastAPI serving layer."
+    },
+    "container_image": {
+      "type": "string",
+      "default": "us-docker.pkg.dev/cloudrun/container/hello",
+      "description": "Container image URI for Cloud Run."
+    },
+    "min_instances": {
+      "type": "integer",
+      "default": 1,
+      "minimum": 0,
+      "description": "Minimum instances for Cloud Run (kept warm for private SLA)."
+    },
+    "max_instances": {
+      "type": "integer",
+      "default": 5,
+      "minimum": 1,
+      "description": "Maximum instances for Cloud Run autoscaling."
+    },
+    "embedding_model": {
+      "type": "string",
+      "default": "text-embedding-004",
+      "description": "Embedding model identifier."
+    },
+    "generation_model": {
+      "type": "string",
+      "default": "gemini-1.5-pro",
+      "description": "Generative model identifier."
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Resource labels."
+    }
+  }
+}

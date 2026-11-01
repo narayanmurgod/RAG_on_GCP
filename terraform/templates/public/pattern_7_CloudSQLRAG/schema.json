@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Cloud SQL pgvector — Public Pattern 7",
+  "description": "Template schema for deploying a public Cloud SQL PostgreSQL instance with pgvector extension enabled, pre-created database, optional Cloud Run serving layer, and optional GCS staging bucket.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "display_name",
+    "instance_name",
+    "user_password"
+  ],
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "description": "GCP Project ID."
+    },
+    "region": {
+      "type": "string",
+      "default": "us-central1",
+      "description": "GCP region for all resources."
+    },
+    "display_name": {
+      "type": "string",
+      "default": "pattern7-cloudsql-rag",
+      "description": "Display name prefix for resources."
+    },
+    "instance_name": {
+      "type": "string",
+      "default": "pattern7-sql-instance",
+      "description": "Unique name for the Cloud SQL instance."
+    },
+    "database_version": {
+      "type": "string",
+      "default": "POSTGRES_16",
+      "description": "PostgreSQL database version."
+    },
+    "tier": {
+      "type": "string",
+      "default": "db-custom-2-7680",
+      "description": "Machine tier for database instance."
+    },
+    "database_name": {
+      "type": "string",
+      "default": "rag_knowledge_db",
+      "description": "Name of PostgreSQL database."
+    },
+    "user_name": {
+      "type": "string",
+      "default": "rag_app_user",
+      "description": "Application database username."
+    },
+    "user_password": {
+      "type": "string",
+      "description": "Application database user password."
+    },
+    "deletion_protection": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether Terraform prevents accidental deletion."
+    },
+    "create_staging_bucket": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to create a Cloud Storage staging bucket."
+    },
+    "staging_bucket_name": {
+      "type": "string",
+      "default": "",
+      "description": "Custom name for document staging bucket."
+    },
+    "enable_cloud_run": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to deploy the optional Cloud Run FastAPI serving layer."
+    },
+    "container_image": {
+      "type": "string",
+      "default": "us-docker.pkg.dev/cloudrun/container/hello",
+      "description": "Container image URI for Cloud Run."
+    },
+    "min_instances": {
+      "type": "integer",
+      "default": 0,
+      "minimum": 0,
+      "description": "Minimum Cloud Run instances."
+    },
+    "max_instances": {
+      "type": "integer",
+      "default": 5,
+      "minimum": 1,
+      "description": "Maximum Cloud Run instances for autoscaling."
+    },
+    "allow_unauthenticated": {
+      "type": "boolean",
+      "default": true,
+      "description": "Allow public unauthenticated access to Cloud Run endpoint."
+    },
+    "embedding_model": {
+      "type": "string",
+      "default": "text-embedding-004",
+      "description": "Embedding model identifier."
+    },
+    "generation_model": {
+      "type": "string",
+      "default": "gemini-1.5-flash",
+      "description": "Generative model identifier."
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Resource labels."
+    }
+  }
+}

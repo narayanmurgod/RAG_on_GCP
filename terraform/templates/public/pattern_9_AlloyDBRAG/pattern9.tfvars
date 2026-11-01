@@ -1,0 +1,9 @@
+project_id            = "my-gcp-project"
+region                = "us-central1"
+display_name          = "pattern9-alloydb-rag"
+cluster_id            = "pattern9-alloydb-cluster"
+network_id            = "projects/my-gcp-project/global/networks/default"
+initial_user_password = "ChangeMe123!SecurePassword"
+instance_id           = "primary-instance"
+cpu_count             = 2
+enable_cloud_run      = false

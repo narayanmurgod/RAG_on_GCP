@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Pattern 9: Public AlloyDB PostgreSQL ScaNN RAG Deployment",
+  "description": "Schema for Pattern 9 Public AlloyDB pgvector & ScaNN RAG deployment with optional Cloud Run serving service.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "network_id",
+    "cluster_id",
+    "initial_user_password"
+  ],
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "description": "GCP Project ID hosting AlloyDB resources."
+    },
+    "region": {
+      "type": "string",
+      "default": "us-central1",
+      "description": "GCP region for all resources."
+    },
+    "display_name": {
+      "type": "string",
+      "default": "pattern9-alloydb-rag",
+      "description": "Display name prefix for resources."
+    },
+    "cluster_id": {
+      "type": "string",
+      "default": "pattern9-alloydb-cluster",
+      "description": "Unique ID for the AlloyDB cluster."
+    },
+    "network_id": {
+      "type": "string",
+      "description": "VPC Network ID (e.g., projects/{project}/global/networks/{network}) for AlloyDB private connectivity."
+    },
+    "initial_user_password": {
+      "type": "string",
+      "description": "Password for the initial postgres administrative user."
+    },
+    "instance_id": {
+      "type": "string",
+      "default": "primary-instance",
+      "description": "Instance ID for primary AlloyDB instance."
+    },
+    "cpu_count": {
+      "type": "number",
+      "default": 2,
+      "description": "Number of vCPUs for primary instance (2, 4, 8, 16, 32, 64, 128)."
+    },
+    "database_flags": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "default": {},
+      "description": "PostgreSQL configuration flags for vector indexing and ScaNN."
+    },
+    "enable_cloud_run": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable optional Cloud Run RAG retrieval / generation serving service."
+    },
+    "container_image": {
+      "type": "string",
+      "default": "us-docker.pkg.dev/cloudrun/container/hello",
+      "description": "Container image URL deployed to Cloud Run."
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "default": {
+        "environment": "public",
+        "pattern": "pattern-9-alloydbrag",
+        "managed-by": "aip-terraform"
+      },
+      "description": "Resource labels attached to all resources."
+    }
+  }
+}

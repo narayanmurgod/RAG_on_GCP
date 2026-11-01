@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RAG Engine — Public Pattern 1",
+  "description": "Template schema for deploying public RAG infrastructure with flexible vector databases (Managed KNN/ANN, Vector Search, Pinecone, Weaviate) and optional Cloud Run serving layer.",
+  "type": "object",
+  "required": [
+    "project_id",
+    "display_name"
+  ],
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "description": "GCP Project ID."
+    },
+    "region": {
+      "type": "string",
+      "default": "us-central1",
+      "description": "GCP region for all resources."
+    },
+    "display_name": {
+      "type": "string",
+      "default": "pattern1-rag-engine",
+      "description": "Base display name prefix."
+    },
+    "description": {
+      "type": "string",
+      "default": "Vertex AI RAG Engine — Public Pattern 1 (pattern_1_RAGEngine)",
+      "description": "Description of the RAG Corpus."
+    },
+    "vector_db_type": {
+      "type": "string",
+      "enum": [
+        "rag_managed_knn",
+        "rag_managed_ann",
+        "vertex_vector_search",
+        "pinecone",
+        "weaviate"
+      ],
+      "default": "rag_managed_knn",
+      "description": "Vector database backend selection."
+    },
+    "create_staging_bucket": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to create a GCS staging bucket for document ingestion."
+    },
+    "staging_bucket_name": {
+      "type": "string",
+      "default": "",
+      "description": "Custom name for document staging bucket."
+    },
+    "ann_leaf_count": {
+      "type": "integer",
+      "default": 500,
+      "description": "Leaf count when vector_db_type is rag_managed_ann."
+    },
+    "ann_tree_depth": {
+      "type": "integer",
+      "default": 2,
+      "description": "Tree depth when vector_db_type is rag_managed_ann."
+    },
+    "vs_dimensions": {
+      "type": "integer",
+      "default": 768,
+      "description": "Dimensions for Vertex Vector Search index."
+    },
+    "vs_algorithm": {
+      "type": "string",
+      "default": "tree_ah",
+      "description": "Algorithm for Vertex Vector Search."
+    },
+    "pinecone_api_key": {
+      "type": "string",
+      "description": "API key for Pinecone (stored in Secret Manager)."
+    },
+    "pinecone_environment": {
+      "type": "string",
+      "default": "us-east-1",
+      "description": "Pinecone environment / region."
+    },
+    "pinecone_index_name": {
+      "type": "string",
+      "default": "rag-knowledge-index",
+      "description": "Pinecone index name."
+    },
+    "weaviate_api_key": {
+      "type": "string",
+      "description": "API key for Weaviate (stored in Secret Manager)."
+    },
+    "weaviate_cluster_url": {
+      "type": "string",
+      "description": "Cluster URL for Weaviate."
+    },
+    "weaviate_collection": {
+      "type": "string",
+      "default": "RAGCollection",
+      "description": "Weaviate class / collection."
+    },
+    "enable_cloud_run": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to deploy the optional Cloud Run FastAPI serving layer."
+    },
+    "container_image": {
+      "type": "string",
+      "default": "us-docker.pkg.dev/cloudrun/container/hello",
+      "description": "Container image URI for Cloud Run."
+    },
+    "min_instances": {
+      "type": "integer",
+      "default": 0,
+      "minimum": 0,
+      "description": "Minimum instances for Cloud Run."
+    },
+    "max_instances": {
+      "type": "integer",
+      "default": 5,
+      "minimum": 1,
+      "description": "Maximum instances for Cloud Run autoscaling."
+    },
+    "allow_unauthenticated": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to permit public unauthenticated invocations."
+    },
+    "embedding_model": {
+      "type": "string",
+      "default": "text-embedding-004",
+      "description": "Embedding model identifier."
+    },
+    "generation_model": {
+      "type": "string",
+      "default": "gemini-1.5-flash",
+      "description": "Generation model identifier."
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Resource labels."
+    }
+  }
+}

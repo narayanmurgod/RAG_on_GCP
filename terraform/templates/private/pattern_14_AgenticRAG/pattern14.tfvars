@@ -1,0 +1,12 @@
+project_id             = "my-gcp-project"
+region                 = "us-central1"
+display_name           = "pattern14-agentic-rag"
+use_existing_network   = false
+network_name           = "pattern14-agentic-vpc"
+agent_framework        = "google-adk"
+deployment_type        = "source_code"
+source_archive_gcs_uri = "gs://my-gcp-project-agent-artifacts/agent_source.tar.gz"
+requirements_gcs_uri   = "gs://my-gcp-project-agent-artifacts/requirements.txt"
+python_version         = "3.11"
+corpus_name            = "agentic-rag-corpus-pvt"
+enable_cloud_run       = false
